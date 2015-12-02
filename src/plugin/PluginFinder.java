@@ -24,8 +24,8 @@ public class PluginFinder {
 	
 	private class MyActionListener implements ActionListener{
 
-		@Override
 		public void actionPerformed(ActionEvent e) {
+			
 			String[] t = PluginFinder.this.dir.list(PluginFinder.this.filter);
 			PluginFinder.this.files = Arrays.asList(t);
 			

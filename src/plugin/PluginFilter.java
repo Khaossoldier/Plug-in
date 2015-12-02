@@ -5,13 +5,28 @@ import java.io.FilenameFilter;
 
 public class PluginFilter implements FilenameFilter{
 
-	@Override
 	public boolean accept(File dir, String name) {
-		if (name.length() > 6){
-			if (name.substring(name.length() - 6).equals(".class"))
-				return true;
+		Class<?> c = null;
+		Object instance = null;
+		//dir exist ?
+		if(!dir.exists()){
+			/* pas normal */
+			System.out.print("Le docier n'existe pas");
+			return false;
 		}
-		return false;
+		//endswith
+		if(!name.endsWith(".class")){
+			
+		}
+		try{
+		// avoir la class
+		c = Class.forName("plugins." + name.substring(0,name.length() - 6));
+		}
+		catch(Exception e){
+			return false;
+		}
+		return true;
+		
 	}
 
 }
