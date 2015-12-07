@@ -19,7 +19,15 @@ public class PluginFinder {
 		this.filter = new PluginFilter();
 		this.dir = new File(dirPath);
 		this.timer = new Timer(1000, new MyActionListener());
+	}
+	
+	public void startTimer(){
 		this.timer.start();
+		while(true);
+	}
+	
+	public List<String> getFiles(){
+		return this.files;
 	}
 	
 	private class MyActionListener implements ActionListener{
@@ -27,7 +35,14 @@ public class PluginFinder {
 		public void actionPerformed(ActionEvent e) {
 			
 			String[] t = PluginFinder.this.dir.list(PluginFinder.this.filter);
-			PluginFinder.this.files = Arrays.asList(t);
+			List<String> change = Arrays.asList(t);
+			if (change.size() < PluginFinder.this.files.size()) {
+				//PluginFinder.this.addPlugin(change);
+			} else if (change.size() > PluginFinder.this.files.size()) {
+				//PluginFinder.this.removePlugin(change);
+			}
+			
+			PluginFinder.this.files = change;
 			
 		}
 	}

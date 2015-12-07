@@ -6,10 +6,15 @@ import java.awt.event.WindowAdapter;
 
 import javax.swing.*;
 
+import editor.listener.PluginActionListener;
+
+import plugin.PluginFinder;
+import plugins.Plugin;
+
 public class BigPanel {
 	
 	
-	public void creationOfTheBigPannel(){
+	public void creationOfTheBigPannel(PluginFinder finder){
 		JFrame f = new JFrame("Welcome To The Big Panel");
 		f.addWindowListener(new FermeWindowEvent());
 		f.setLocation(100,200);
@@ -19,8 +24,11 @@ public class BigPanel {
 		
 		JMenuBar bar  = new JMenuBar();
 		JMenu menu = new JMenu("Tools");
-		JMenuItem lower = new JMenuItem("ToLowercase");
-		lower.addPluginListener(new LowerEvent());
+		for(String s: finder.getFiles()){
+			
+		}
+		//JMenuItem lower = new JMenuItem("ToLowercase");
+		//lower.addPluginListener(new LowerEvent());
 		menu.add(lower);
 		bar.add(menu);
 		bar.setPreferredSize(new Dimension(640, 20));
@@ -38,7 +46,8 @@ public class BigPanel {
 	
 	public static void main(String[] args){
 		BigPanel b = new BigPanel();
-		b.creationOfTheBigPannel();
+		PluginFinder finder = new PluginFinder("dropins/plugins");
+		b.creationOfTheBigPannel(finder);
 	}
 	
 	
