@@ -50,10 +50,18 @@ public class BigPanel {
 	
 	public void addJMenuItem(String s){
 		
-		JMenuItem item = new JMenuItem(s);
-		MyMouseListener mouse = new MyMouseListener(s);
-		item.addMouseListener(mouse);
-		this.menu.add(item);
+		try{
+			Class<?> classe = Class.forName("plugins." + s);
+			Constructor<?> cons = classe.getConstructor();
+			Plugin p = (Plugin) cons.newInstance();
+			JMenuItem item = new JMenuItem(p.getLabel());
+			MyMouseListener mouse = new MyMouseListener(s);
+			item.addMouseListener(mouse);
+			this.menu.add(item);
+			}
+			catch(Exception e){
+				System.out.println("Ca marche pas !");
+			}
 	}
 	
 	public void removeJMenuItem(String s){
