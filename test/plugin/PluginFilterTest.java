@@ -16,28 +16,28 @@ public class PluginFilterTest {
 	@Test
 	public void testAcceptIfNotClass(){
 		PluginFilter f = new PluginFilter();
-		File dir = new File("C:\\Users\\nicol\\Programmation\\COO\\Plug-in\\src\\plugins");
+		File dir = new File("./src/plugins");
 		assertFalse(f.accept(dir, "ToLowercase.java"));
 	}
 	
 	@Test
 	public void testAcceptIfConstructorHaveArguments(){
 		PluginFilter f = new PluginFilter();
-		File dir = new File("C:\\Users\\nicol\\Programmation\\COO\\Plug-in\\bin\\plugins");
+		File dir = new File("./bin/plugins");
 		assertFalse(f.accept(dir, "PluginTestOne.class"));
 	}
 	
 	@Test
 	public void testAcceptIfNotImplementing(){
 		PluginFilter f = new PluginFilter();
-		File dir = new File("C:\\Users\\nicol\\Programmation\\COO\\Plug-in\\bin\\plugins");
+		File dir = new File("./bin/plugins");
 		assertFalse(f.accept(dir, "PluginTestTwo.class"));
 	}
 	
 	@Test
 	public void testAcceptWithAGoodFile(){
 		PluginFilter f = new PluginFilter();
-		File dir = new File("C:\\Users\\nicol\\Programmation\\COO\\Plug-in\\bin\\plugins");
+		File dir = new File("./bin/plugins");
 		assertTrue(f.accept(dir, "ToLowercase.class"));
 	}
 

@@ -19,6 +19,7 @@ public class PluginFilter implements FilenameFilter{
 	 */
 	public boolean accept(File dir, String name) {
 		Class<?> c = null;
+		@SuppressWarnings("unused")
 		Object instance = null;
 		//dir exist ?
 		if(!dir.exists()){
@@ -34,7 +35,6 @@ public class PluginFilter implements FilenameFilter{
 		// avoir la class
 		c = Class.forName("plugins." + name.substring(0,name.length() - 6));
 		instance = c.getConstructor().newInstance();
-		System.out.println(c.getConstructor().getTypeParameters().length);
 		}
 		catch(Exception e){
 			return false;

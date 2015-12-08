@@ -57,7 +57,7 @@ public class BigPanel {
 	 */
 	public static void main(String[] args){
 		BigPanel b = new BigPanel();
-		PluginFinder finder = new PluginFinder("C:\\Users\\nicol\\Programmation\\COO\\Plug-in\\bin\\plugins", b);
+		PluginFinder finder = new PluginFinder("./bin/plugins", b);
 		finder.startTimer();
 	}
 	
@@ -87,9 +87,18 @@ public class BigPanel {
 	 */
 	public void removeJMenuItem(String s){
 		for(int i=0; i < this.menu.getItemCount(); i++){
-			if (this.menu.getItem(i).getComponent().getName().equals(s)){
-				this.menu.remove(i);
-			}
+			try{
+				Class<?> classe = Class.forName("plugins." + s);
+				Constructor<?> cons = classe.getConstructor();
+				Plugin p = (Plugin) cons.newInstance();
+				if (this.menu.getItem(i).getText().equals(p.getLabel())){
+					this.menu.remove(i);
+				}
+				}
+				catch(Exception e){
+					System.out.println("Ca marche pas !");
+				}
+			
 		}
 	}
 	
@@ -117,12 +126,21 @@ public class BigPanel {
 		public MyMouseListener(String s){
 			this.s = s;
 		}
-
+		
+		public void mouseClicked(MouseEvent arg0) {
+			
+		}
+		public void mouseEntered(MouseEvent arg0) {
+		}
+		
+		public void mouseExited(MouseEvent arg0) {
+		}
+		
 		/** 
 		 * Define the Event when the mouse click on the item.
 		 * Change the text in the TextArea with the transform of the plugin.
 		 */
-		public void mouseClicked(MouseEvent arg0) {
+		public void mousePressed(MouseEvent arg0) {
 			try{
 				Class<?> classe = Class.forName("plugins." + s);
 				Constructor<?> cons = classe.getConstructor();
@@ -132,14 +150,6 @@ public class BigPanel {
 				catch(Exception e){
 					System.out.println("Ca marche pas !");
 				}
-		}
-		public void mouseEntered(MouseEvent arg0) {
-		}
-		
-		public void mouseExited(MouseEvent arg0) {
-		}
-
-		public void mousePressed(MouseEvent arg0) {
 		}
 
 		public void mouseReleased(MouseEvent arg0) {
