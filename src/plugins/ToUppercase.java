@@ -9,9 +9,9 @@ public class ToUppercase implements Plugin {
 	}
 	
 	@Override
-	public String Transform(String s) {
-		s.toUpperCase();
-		return s;
+	public String transform(String s) {
+		String t = s.toUpperCase();
+		return t;
 	}
 
 	@Override

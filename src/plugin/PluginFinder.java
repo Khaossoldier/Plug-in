@@ -3,10 +3,13 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.Timer;
+
+import graphics.BigPanel;
 
 public class PluginFinder {
 	
@@ -14,11 +17,14 @@ public class PluginFinder {
 	private Timer timer;
 	private File dir;
 	private List<String> files;
+	private BigPanel panel;
 	
-	public PluginFinder(String dirPath){
+	public PluginFinder(String dirPath, BigPanel panel){
 		this.filter = new PluginFilter();
 		this.dir = new File(dirPath);
 		this.timer = new Timer(1000, new MyActionListener());
+		this.panel = panel;
+		this.files = new ArrayList<String>();
 	}
 	
 	public void startTimer(){
@@ -35,11 +41,16 @@ public class PluginFinder {
 		public void actionPerformed(ActionEvent e) {
 			
 			String[] t = PluginFinder.this.dir.list(PluginFinder.this.filter);
-			List<String> change = Arrays.asList(t);
-			if (change.size() < PluginFinder.this.files.size()) {
-				//PluginFinder.this.addPlugin(change);
-			} else if (change.size() > PluginFinder.this.files.size()) {
-				//PluginFinder.this.removePlugin(change);
+			ArrayList<String> change = new ArrayList<String>(Arrays.asList(t));
+			for(String s : change){
+				if(!PluginFinder.this.files.contains(s)){
+					PluginFinder.this.panel.addJMenuItem(s.substring(0,s.length() - 6));
+				}
+			}
+			for(String s : PluginFinder.this.files){
+				if(!change.contains(s)){
+					PluginFinder.this.panel.removeJMenuItem(s.substring(0,s.length() - 6));
+				}
 			}
 			
 			PluginFinder.this.files = change;

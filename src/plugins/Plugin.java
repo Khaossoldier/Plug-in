@@ -1,7 +1,7 @@
 package plugins;
 
 public interface Plugin {
-	public String Transform(String s);
+	public String transform(String s);
 	
 	public String getLabel();
 }

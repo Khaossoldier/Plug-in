@@ -2,19 +2,23 @@ package graphics;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
+import java.lang.reflect.Constructor;
 
 import javax.swing.*;
-
-import editor.listener.PluginActionListener;
 
 import plugin.PluginFinder;
 import plugins.Plugin;
 
 public class BigPanel {
 	
+	private JMenuBar bar;
+	private JMenu menu;
+	private JTextArea text;
 	
-	public void creationOfTheBigPannel(PluginFinder finder){
+	public BigPanel(){
 		JFrame f = new JFrame("Welcome To The Big Panel");
 		f.addWindowListener(new FermeWindowEvent());
 		f.setLocation(100,200);
@@ -22,21 +26,15 @@ public class BigPanel {
 		
 		f.setLayout(new BorderLayout());
 		
-		JMenuBar bar  = new JMenuBar();
-		JMenu menu = new JMenu("Tools");
-		for(String s: finder.getFiles()){
-			
-		}
-		//JMenuItem lower = new JMenuItem("ToLowercase");
-		//lower.addPluginListener(new LowerEvent());
-		menu.add(lower);
+		bar  = new JMenuBar();
+		menu = new JMenu("Tools");
 		bar.add(menu);
 		bar.setPreferredSize(new Dimension(640, 20));
 		
 		f.add(bar, BorderLayout.NORTH);
-		JTextArea ta = new JTextArea(); 
-		f.add(ta, BorderLayout.SOUTH);
-		ta.setPreferredSize(new Dimension(640,460));
+		text = new JTextArea(); 
+		f.add(text, BorderLayout.SOUTH);
+		text.setPreferredSize(new Dimension(640,460));
 		
 		f.pack();
 		f.setVisible(true);
@@ -46,8 +44,24 @@ public class BigPanel {
 	
 	public static void main(String[] args){
 		BigPanel b = new BigPanel();
-		PluginFinder finder = new PluginFinder("dropins/plugins");
-		b.creationOfTheBigPannel(finder);
+		PluginFinder finder = new PluginFinder("C:\\Users\\nicol\\Programmation\\COO\\Plug-in\\bin\\plugins", b);
+		finder.startTimer();
+	}
+	
+	public void addJMenuItem(String s){
+		
+		JMenuItem item = new JMenuItem(s);
+		MyMouseListener mouse = new MyMouseListener(s);
+		item.addMouseListener(mouse);
+		this.menu.add(item);
+	}
+	
+	public void removeJMenuItem(String s){
+		for(int i=0; i < this.menu.getItemCount(); i++){
+			if (this.menu.getItem(i).getComponent().getName().equals(s)){
+				this.menu.remove(i);
+			}
+		}
 	}
 	
 	
@@ -57,5 +71,44 @@ public class BigPanel {
 		}
 	}
 	
+	private class MyMouseListener implements MouseListener{
+		
+		private String s;
+		
+		public MyMouseListener(String s){
+			this.s = s;
+		}
+
+		@Override
+		public void mouseClicked(MouseEvent arg0) {
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent arg0) {
+		}
+
+		@Override
+		public void mouseExited(MouseEvent arg0) {
+		}
+
+		@Override
+		public void mousePressed(MouseEvent arg0) {
+			try{
+				Class<?> classe = Class.forName("plugins." + s);
+				Constructor<?> cons = classe.getConstructor();
+				Plugin p = (Plugin) cons.newInstance();
+				BigPanel.this.text.setText(p.transform(BigPanel.this.text.getText()));
+				}
+				catch(Exception e){
+					System.out.println("Ca marche pas !");
+				}
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent arg0) {
+		}
+		
+	}
 	
 }

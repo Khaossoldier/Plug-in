@@ -9,9 +9,9 @@ public class ToLowercase implements Plugin {
 	}
 	
 	@Override
-	public String Transform(String s) {
-		s.toLowerCase();
-		return s;
+	public String transform(String s) {
+		String t = s.toLowerCase();
+		return t;
 	}
 
 	@Override
