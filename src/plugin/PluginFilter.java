@@ -1,18 +1,27 @@
 package plugin;
 
 import java.io.File;
+
 import java.io.FilenameFilter;
 
 import plugins.Plugin;
 
+/**
+ * @author Delassus Alexandre
+ * @author Duflos Nicolas
+ * Define the PluginFilter.
+ */
 public class PluginFilter implements FilenameFilter{
 
+	/** 
+	 * @param dir the directory to check, name the name of the file to check
+	 * Check if the dir exist, if the file is a plugin, if the constructor doesn't get parameter and if it come from the interface Plugin.
+	 */
 	public boolean accept(File dir, String name) {
 		Class<?> c = null;
 		boolean test = false;
 		//dir exist ?
 		if(!dir.exists()){
-			/* pas normal */
 			System.out.print("Le dossier n'existe pas");
 			return false;
 		}

@@ -12,12 +12,21 @@ import javax.swing.*;
 import plugin.PluginFinder;
 import plugins.Plugin;
 
+/**
+ * @author Delassus Alexandre
+ * @author Duflos Nicolas
+ * Define the BigPanel and the main function.
+ * The Big Panel is the default panel.
+ */
 public class BigPanel {
 	
 	private JMenuBar bar;
 	private JMenu menu;
 	private JTextArea text;
 	
+	/**
+	 * Constructor of BigPanel.
+	 */
 	public BigPanel(){
 		JFrame f = new JFrame("Welcome To The Big Panel");
 		f.addWindowListener(new FermeWindowEvent());
@@ -42,12 +51,20 @@ public class BigPanel {
 	}
 	
 	
+	/**
+	 * @param args the command line.
+	 * Main function, create the BigPanel, the PluginFinder and start the timer.
+	 */
 	public static void main(String[] args){
 		BigPanel b = new BigPanel();
 		PluginFinder finder = new PluginFinder("C:\\Users\\nicol\\Programmation\\COO\\Plug-in\\bin\\plugins", b);
 		finder.startTimer();
 	}
 	
+	/**
+	 * @param s the name of the plugin.
+	 * Add the JMenuItem to the tool bar.
+	 */
 	public void addJMenuItem(String s){
 		
 		try{
@@ -64,6 +81,10 @@ public class BigPanel {
 			}
 	}
 	
+	/**
+	 * @param s the name of the plugin.
+	 * Remove the JMenuItem from the tool bar.
+	 */
 	public void removeJMenuItem(String s){
 		for(int i=0; i < this.menu.getItemCount(); i++){
 			if (this.menu.getItem(i).getComponent().getName().equals(s)){
@@ -73,35 +94,35 @@ public class BigPanel {
 	}
 	
 	
+	/**
+	 *	Define the Close Event.
+	 */
 	class FermeWindowEvent extends WindowAdapter {
 		public void windowClosing(java.awt.event.WindowEvent e) {
 			System.exit(0);
 		}
 	}
 	
+	/**
+	 *	Define the Mouse Listener
+	 */
 	private class MyMouseListener implements MouseListener{
 		
 		private String s;
 		
+		/**
+		 * @param s the name of the plugin.
+		 * Constructor of MyMouseListener.
+		 */
 		public MyMouseListener(String s){
 			this.s = s;
 		}
 
-		@Override
+		/** 
+		 * Define the Event when the mouse click on the item.
+		 * Change the text in the TextArea with the transform of the plugin.
+		 */
 		public void mouseClicked(MouseEvent arg0) {
-			
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent arg0) {
-		}
-
-		@Override
-		public void mouseExited(MouseEvent arg0) {
-		}
-
-		@Override
-		public void mousePressed(MouseEvent arg0) {
 			try{
 				Class<?> classe = Class.forName("plugins." + s);
 				Constructor<?> cons = classe.getConstructor();
@@ -112,8 +133,15 @@ public class BigPanel {
 					System.out.println("Ca marche pas !");
 				}
 		}
+		public void mouseEntered(MouseEvent arg0) {
+		}
+		
+		public void mouseExited(MouseEvent arg0) {
+		}
 
-		@Override
+		public void mousePressed(MouseEvent arg0) {
+		}
+
 		public void mouseReleased(MouseEvent arg0) {
 		}
 		

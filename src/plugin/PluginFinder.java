@@ -11,6 +11,11 @@ import javax.swing.Timer;
 
 import graphics.BigPanel;
 
+/**
+ * @author Delassus Alexandre
+ * @author Duflos Nicolas
+ * Define the PluginFinder.
+ */
 public class PluginFinder {
 	
 	private PluginFilter filter;
@@ -19,6 +24,10 @@ public class PluginFinder {
 	private List<String> files;
 	private BigPanel panel;
 	
+	/**
+	 * @param dirPath the path of the dir to check
+	 * @param panel the graphic interface
+	 */
 	public PluginFinder(String dirPath, BigPanel panel){
 		this.filter = new PluginFilter();
 		this.dir = new File(dirPath);
@@ -27,17 +36,23 @@ public class PluginFinder {
 		this.files = new ArrayList<String>();
 	}
 	
+	/**
+	 * Start the timer
+	 */
 	public void startTimer(){
 		this.timer.start();
 		while(true);
 	}
 	
-	public List<String> getFiles(){
-		return this.files;
-	}
-	
+	/**
+	 *	Define MyActionListener for the PluginFinder
+	 */
 	private class MyActionListener implements ActionListener{
 
+		/** 
+		 * @param e
+		 * Define the action to perform to check if the plugin list changed.
+		 */
 		public void actionPerformed(ActionEvent e) {
 			
 			String[] t = PluginFinder.this.dir.list(PluginFinder.this.filter);
